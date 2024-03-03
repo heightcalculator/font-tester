@@ -169,7 +169,7 @@
         // Initial call to update preview
         updatePreview();
         function download() {
-            var fontSelect = document.getElementById("fontSelect");
+            var fontSelect = document.getElementById("fontSelect").value;
             window.location.href = "/fonts/" + fontSelect + "-Regular.ttf";
         }
     </script>
