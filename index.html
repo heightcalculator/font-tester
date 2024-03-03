@@ -138,6 +138,7 @@
         <textarea id="textInput" placeholder="Type your text here"></textarea><br>
         <h3>Select Handwriting</h3>
         <select id="fontSelect">
+            <option value="">Select an option</option>
             <option value="Aarush">Aarush</option>
             <option value="Amulya">Amulya</option>
             <option value="Lexi">Lexi</option>
@@ -154,8 +155,11 @@
             var fontSelect = document.getElementById("fontSelect").value;
             var previewBox = document.getElementById("previewBox");
             previewBox.innerHTML = textInput.replace(/\n/g, "<br>");
-            if (!textInput) {
+            if (!textInput && fontSelect != "") {
                 previewBox.innerHTML = "Hi, my name is " + fontSelect + " and I am amazing!"
+            }
+            if (textInput && fontSelect == "") {
+                previewBox.innerHTML = "Please select a font above"
             }
             previewBox.style.fontFamily = fontSelect;
         }
