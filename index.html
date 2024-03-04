@@ -10,7 +10,7 @@
     <meta name="description" content="Get any text written in the handwritings of REAL people!">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <style>
+    <style id="styleSheet">
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #212121;
@@ -167,7 +167,7 @@
             <!-- Add more font options here -->
         </select>
         <br><br>
-        <div class="preview-box" id="previewBox">Hi</div>
+        <div class="preview-box" id="previewBox"></div>
         <br> <button onclick="download()"><span>Download this Font</span></button>
     </div>
     <footer id="footer"  xmlns:cc="http://creativecommons.org/ns#">All fonts on this page are derived from actual people's handwritings and shall not be used for commercial and/or illegal or unethical purposes without their consent. All fonts are licensed under <a
@@ -189,15 +189,13 @@
             if (!yourFontName) {
                 return;
             }
-            var newStyle = document.createElement('style');
+            var newStyle = document.getElementById('styleSheet');
             newStyle.appendChild(document.createTextNode("\
-@font-face {\
-font-family: '" + yourFontName + "';\
-src: url('fonts/" + yourFontName + "-Regular.ttf');\
-}\
+        @font-face {\
+            font-family: '" + yourFontName + "';\
+            src: url('fonts/" + yourFontName + "-Regular.ttf');\
+        }\
 "));
-
-            document.head.appendChild(newStyle);
         }
         let font = document.getElementById("fontSelect");
         for (i = 1; i < font.length; i++) {
@@ -228,7 +226,6 @@ src: url('fonts/" + yourFontName + "-Regular.ttf');\
         document.getElementById("fontSelect").addEventListener("change", updatePreview);
 
         // Initial call to update preview
-        updatePreview();
         function download() {
             var fontSelect = document.getElementById("fontSelect").value;
             window.location.href = "/fonts/" + fontSelect + "-Regular.ttf";
