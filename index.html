@@ -9,25 +9,7 @@
     <title>Font Previewer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <style>
-        @font-face {
-            font-family: Aarush;
-            src: url("fonts/Aarush-Regular.ttf");
-        }
-
-        @font-face {
-            font-family: Amulya;
-            src: url("fonts/Amulya-Regular.ttf");
-        }
-
-        @font-face {
-            font-family: Lexi;
-            src: url("fonts/Lexi-Regular.ttf");
-        }
-
-        @font-face {
-            font-family: Girija;
-            src: url("fonts/Girija-Regular.ttf");
-        }
+  
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -156,11 +138,12 @@
         <textarea id="textInput" placeholder="Type your text here"></textarea><br>
         <h3>Select Handwriting</h3>
         <select id="fontSelect">
-            <option value="">Select an option</option>
+            <option disabled selected value="">Select an option</option>
             <option value="Aarush">Aarush</option>
             <option value="Amulya">Amulya</option>
             <option value="Girija">Girija</option>
             <option value="Lexi">Lexi</option>
+            <option value="Wendell">Wendell</option>
         </select>
 
         <select id="fontSize">
@@ -170,6 +153,7 @@
             <option value="18px" selected="selected">18px</option>
             <option value="20px">20px</option>
             <option value="22px">22px</option>
+            <!-- Add more font options here -->
         </select>
         <br><br>
         <div class="preview-box" id="previewBox">Hi</div>
@@ -177,6 +161,24 @@
     </div>
 
     <script>
+        function newfont(yourFontName) {
+            if(!yourFontName){
+                return;
+            }
+            var newStyle = document.createElement('style');
+            newStyle.appendChild(document.createTextNode("\
+@font-face {\
+font-family: '" + yourFontName + "';\
+src: url('fonts/" + yourFontName + "-Regular.ttf');\
+}\
+"));
+
+            document.head.appendChild(newStyle);
+        }
+        let font = document.getElementById("fontSelect");
+        for(i=1; i<font.length; i++){
+            newfont(font[i].value)
+        }
         function updatePreview() {
             var textInput = document.getElementById("textInput").value;
             var fontSelect = document.getElementById("fontSelect").value;
@@ -193,11 +195,15 @@
             previewBox.style.fontSize = fontSize;
         }
 
+        // Event listener for text input
         document.getElementById("textInput").addEventListener("input", updatePreview);
 
         document.getElementById("fontSize").addEventListener("change", updatePreview);
 
+        // Event listener for font select
         document.getElementById("fontSelect").addEventListener("change", updatePreview);
+
+        // Initial call to update preview
         updatePreview();
         function download() {
             var fontSelect = document.getElementById("fontSelect").value;
