@@ -24,6 +24,11 @@
             src: url("fonts/Lexi-Regular.ttf");
         }
 
+        @font-face {
+            font-family: Girija;
+            src: url("fonts/Girija-Regular.ttf");
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #212121;
@@ -76,6 +81,7 @@
             color: #c3c3c3;
             border: 2px solid #d3d3d3;
         }
+
         #fontSize {
             width: 95px;
             padding: 10px;
@@ -153,10 +159,10 @@
             <option value="">Select an option</option>
             <option value="Aarush">Aarush</option>
             <option value="Amulya">Amulya</option>
+            <option value="Girija">Girija</option>
             <option value="Lexi">Lexi</option>
-            <!-- Add more font options here -->
         </select>
-        
+
         <select id="fontSize">
             <option value="12px">12px</option>
             <option value="14px">14px</option>
@@ -164,7 +170,6 @@
             <option value="18px" selected="selected">18px</option>
             <option value="20px">20px</option>
             <option value="22px">22px</option>
-            <!-- Add more font options here -->
         </select>
         <br><br>
         <div class="preview-box" id="previewBox">Hi</div>
@@ -172,7 +177,6 @@
     </div>
 
     <script>
-        // Function to update font preview
         function updatePreview() {
             var textInput = document.getElementById("textInput").value;
             var fontSelect = document.getElementById("fontSelect").value;
@@ -189,15 +193,11 @@
             previewBox.style.fontSize = fontSize;
         }
 
-        // Event listener for text input
         document.getElementById("textInput").addEventListener("input", updatePreview);
 
         document.getElementById("fontSize").addEventListener("change", updatePreview);
 
-        // Event listener for font select
         document.getElementById("fontSelect").addEventListener("change", updatePreview);
-
-        // Initial call to update preview
         updatePreview();
         function download() {
             var fontSelect = document.getElementById("fontSelect").value;
