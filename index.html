@@ -157,6 +157,7 @@
             <option value="Lexi">Lexi</option>
             <option value="Mariana">Mari</option>
             <option value="Nathan">Nathan</option>
+            <option value="Neil">Neil</option>
             <option value="Pressley">Pressley</option>
             <option value="Wendell">Wendell</option>
         </select>
@@ -168,7 +169,9 @@
             <option value="18px" selected="selected">18px</option>
             <option value="20px">20px</option>
             <option value="22px">22px</option>
-            <!-- Add more font options here -->
+            <option value="24px">24px</option>
+            <option value="26px">26px</option>
+            <option value="28px">28px</option>
         </select>
         <br><br>
         <div class="preview-box" id="previewBox"></div>
@@ -195,16 +198,19 @@
             }
             var newStyle = document.getElementById('styleSheet');
             newStyle.appendChild(document.createTextNode("\
-        @font-face {\
-            font-family: '" + yourFontName + "';\
-            src: url('fonts/" + yourFontName + "-Regular.ttf');\
-        }\
+@font-face {\
+ font-family: '" + yourFontName + "';\
+ src: url('fonts/" + yourFontName + "-Regular.ttf');\
+}\
 "));
         }
+        
         let font = document.getElementById("fontSelect");
+        
         for (i = 1; i < font.length; i++) {
             newfont(font[i].value)
         }
+        
         function updatePreview() {
             var textInput = document.getElementById("textInput").value;
             var fontSelect = document.getElementById("fontSelect").value;
@@ -221,15 +227,12 @@
             }
         }
 
-        // Event listener for text input
         document.getElementById("textInput").addEventListener("input", updatePreview);
 
         document.getElementById("fontSize").addEventListener("change", updatePreview);
 
-        // Event listener for font select
         document.getElementById("fontSelect").addEventListener("change", updatePreview);
 
-        // Initial call to update preview
         function download() {
             var fontSelect = document.getElementById("fontSelect").value;
             window.location.href = "/fonts/" + fontSelect + "-Regular.ttf";
