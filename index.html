@@ -180,6 +180,7 @@
         <br><br> 
         <div class="preview-box" id="previewBox"></div>
         <br> <button onclick="download()"><span>Download this Font</span></button>
+        <br> <button onclick="copyInfo()"><span>Use this font!</span></button>
     </div>
     <footer id="footer"  xmlns:cc="http://creativecommons.org/ns#">All fonts on this page are derived from actual people's handwritings and shall not be used for commercial and/or illegal or unethical purposes without their consent. All fonts are licensed under <a
             href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank"
@@ -241,4 +242,12 @@
             var fontSelect = document.getElementById("fontSelect").value;
             window.location.href = "/fonts/" + fontSelect + "-Regular.ttf";
         }
+        function copyInfo() {
+            var fontSelect = document.getElementById("fontSelect").value;
+            let link = "https://fonts.aarushmagic.com/fonts/" + fontSelect + "-Regular.ttf";
+            let info = "/* This font can be found on https://fonts.aarushmagic.com */\r\n@font-face {    \r\n font-family: '" + fontSelect + "'; \r\n    src: url('" + link + "');\r\n}"
+            navigator.clipboard.writeText(info).then(() => {
+                console.log("successfully copied");
+            });
+    }
     </script>
