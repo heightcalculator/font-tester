@@ -260,6 +260,8 @@
 
         document.getElementById("fontSelect").addEventListener("change", updatePreview);
 
+        updatePreview();
+        
         function download() {
             var fontSelect = document.getElementById("fontSelect").value;
             window.location.href = "/fonts/" + fontSelect + "-Regular.ttf";
