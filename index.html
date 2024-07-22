@@ -217,6 +217,27 @@
             newfont(font[i].value)
         }
         
+        function getQueryStringParam(param) {
+            var url = window.location.toString();
+            url.match(/\?(.+)$/);
+            var params = RegExp.$1;
+            params = params.split("&");
+            var queryStringList = {};
+            for (var i = 0; i < params.length; i++) {
+                var tmp = params[i].split("=");
+                queryStringList[tmp[0]] = unescape(tmp[1]);
+            }
+            return decodeURIComponent(queryStringList[param]);
+        }
+        let textParam = getQueryStringParam('q').split('+').join(' ');
+        let fontParam = getQueryStringParam('f').split('+').join(' ');
+        if (fontParam != "undefined") {
+            document.getElementById("fontSelect").value = fontParam;
+        }
+        if (textParam != "undefined") {
+            document.getElementById("textInput").value = textParam;
+        }
+        
         function updatePreview() {
             var textInput = document.getElementById("textInput").value;
             var fontSelect = document.getElementById("fontSelect").value;
