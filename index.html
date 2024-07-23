@@ -26,6 +26,7 @@
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
         }
 
         h1 {
@@ -136,12 +137,54 @@
          text-align: center;
          font-size: 12px;
         }
+
+        .share {
+            font-weight: bold;
+            position: absolute;
+            left: 7px;
+        }
+
+        .share:before {
+            content: ".";
+            font-size: 2em;
+            position: absolute;
+            bottom: -1px;
+            left: -3px;
+        }
+
+        .share:after {
+            content: ":";
+            font-size: 2em;
+            position: absolute;
+            bottom: -6px;
+            right: -4px;
+        }
+
+        .share:hover {
+            color: rgb(186, 186, 186);
+            cursor: copy;
+        }
+
+        .codeShare {
+            position: absolute;
+            top: 27px;
+            left: 0px
+        }
+
+        .codeShare:hover {
+            color: rgb(186, 186, 186);
+            cursor: copy;
+        }
     </style>
 </head>
 
 <body>
 
     <div class="container">
+        <div style="position:absolute; top: 20px; right: 40px;">
+            <span class="share" onclick="shareInfo()">&lt;</span>
+            <span class="codeShare" onclick="copyInfo()">&lt;/&gt;</span>
+        </div>
         <h1>Handwriting Font Maker</h1>
         <textarea id="textInput" placeholder="Type your text here"></textarea><br>
         <h3>Select Handwriting</h3>
@@ -181,7 +224,6 @@
         <br><br> 
         <div class="preview-box" id="previewBox"></div>
         <br> <button onclick="download()"><span>Download this Font</span></button>
-        <br> <button onclick="copyInfo()"><span>Use this font!</span></button>
     </div>
     <footer id="footer"  xmlns:cc="http://creativecommons.org/ns#">All fonts on this page are derived from actual people's handwritings and shall not be used for commercial and/or illegal or unethical purposes without their consent. All fonts are licensed under <a
             href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank"
@@ -198,6 +240,9 @@
 
 </html>
     <script>
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            document.getElementsByClassName("codeShare")[0].style.display = "none";
+        }
         function newfont(yourFontName) {
             if (!yourFontName) {
                 return;
@@ -231,11 +276,15 @@
         }
         let textParam = getQueryStringParam('q').split('+').join(' ');
         let fontParam = getQueryStringParam('f').split('+').join(' ');
+        let sizeParam = getQueryStringParam('s').split('+').join(' ');
         if (fontParam != "undefined") {
             document.getElementById("fontSelect").value = fontParam;
         }
         if (textParam != "undefined") {
             document.getElementById("textInput").value = textParam;
+        }
+        if (sizeParam != "undefined") {
+            document.getElementById("fontSize").value = sizeParam;
         }
         
         function updatePreview() {
@@ -269,9 +318,38 @@
         function copyInfo() {
             var fontSelect = document.getElementById("fontSelect").value;
             let link = "https://fonts.aarushmagic.com/fonts/" + fontSelect + "-Regular.ttf";
-            let info = "/* This font can be found on https://fonts.aarushmagic.com */\r\n@font-face {    \r\n font-family: '" + fontSelect + "'; \r\n    src: url('" + link + "');\r\n}"
+            let info = "/* This and other handwriting fonts can be found on https://fonts.aarushmagic.com */\r\n@font-face {    \r\n font-family: '" + fontSelect + "'; \r\n    src: url('" + link + "');\r\n}"
             navigator.clipboard.writeText(info).then(() => {
                 console.log("successfully copied");
             });
-    }
+        }
+            
+        function shareInfo() {
+            var fontSelect = document.getElementById("fontSelect").value.replace(" ", "+");
+            var insertedText = document.getElementById("textInput").value.replace(" ", "+").replace(/\n/g, "+");
+            var size = document.getElementById("fontSize").value;
+            let link = "https://fonts.aarushmagic.com/";
+            let hasFont = false;
+            let hasSize = false;
+            if (fontSelect != "") {
+                link += "?f=" + fontSelect;
+                hasFont = true;
+            }
+            if (size != "18px") {
+                if (hasFont) {
+                    link += "&";
+                }
+                link += "s=" + size;
+                hasSize = true;
+            }
+            if (insertedText != "") {
+                if (hasFont || hasSize) {
+                    link += "&";
+                }
+                link += "q=" + insertedText;
+            }
+            navigator.clipboard.writeText(link).then(() => {
+                console.log("successfully copied");
+            });
+        }
     </script>
