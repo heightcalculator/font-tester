@@ -325,8 +325,8 @@
         }
             
         function shareInfo() {
-            var fontSelect = document.getElementById("fontSelect").value.replace(" ", "+");
-            var insertedText = document.getElementById("textInput").value.replace(" ", "+").replace(/\n/g, "+");
+            var fontSelect = document.getElementById("fontSelect").value.replaceAll(" ", "+");
+            var insertedText = document.getElementById("textInput").value.replaceAll(" ", "+").replaceAll(/\n/g, "+");
             var size = document.getElementById("fontSize").value;
             let link = "https://fonts.aarushmagic.com/";
             let hasFont = false;
